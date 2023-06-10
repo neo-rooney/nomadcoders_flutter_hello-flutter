@@ -1,123 +1,21 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  int totalSeconds = 1500;
-  bool isRunning = false;
-  late Timer timer;
-
-  void onTick(Timer timer) {
-    setState(() {
-      totalSeconds = totalSeconds - 1;
-    });
-  }
-
-  void onStartPress() {
-    timer = Timer.periodic(
-      const Duration(
-        seconds: 1,
-      ),
-      onTick,
-    );
-    setState(() {
-      isRunning = true;
-    });
-  }
-
-  void onPausePress() {
-    timer.cancel();
-    setState(() {
-      isRunning = false;
-    });
-  }
-
-  String format(int seconds) {
-    var duration = Duration(seconds: seconds);
-    return duration.toString().split('.').first.substring(2, 7);
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Column(
-        children: [
-          Flexible(
-            flex: 1,
-            child: Container(
-              alignment: Alignment.bottomCenter,
-              child: Text(
-                format(totalSeconds),
-                style: TextStyle(
-                  fontSize: 89,
-                  fontWeight: FontWeight.w600,
-                  color: Theme.of(context).cardColor,
-                ),
-              ),
+      appBar: AppBar(
+          elevation: 2,
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.green,
+          title: const Text(
+            "오늘의 웹툰",
+            style: TextStyle(
+              fontSize: 24,
             ),
-          ),
-          Flexible(
-            flex: 3,
-            child: Center(
-              child: IconButton(
-                iconSize: 120,
-                color: Theme.of(context).cardColor,
-                onPressed: isRunning ? onPausePress : onStartPress,
-                icon: Icon(
-                  isRunning
-                      ? Icons.pause_circle_outline_outlined
-                      : Icons.play_circle_outline_outlined,
-                ),
-              ),
-            ),
-          ),
-          Flexible(
-            flex: 1,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.circular(50)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Pomodoros",
-                          style: TextStyle(
-                            color:
-                                Theme.of(context).textTheme.displayLarge!.color,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          "0",
-                          style: TextStyle(
-                            color:
-                                Theme.of(context).textTheme.displayLarge!.color,
-                            fontSize: 40,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
+          )),
     );
   }
 }
